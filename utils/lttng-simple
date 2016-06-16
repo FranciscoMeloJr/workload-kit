@@ -155,7 +155,12 @@ def do_trace(cmd, session, options, kernel, ust):
     if options.libc_wrapper:
         cmd_env = os.environ.copy()
         cmd_env["LD_PRELOAD"] = "liblttng-ust-libc-wrapper.so"
-
+        
+    # Step 4.1: ld_preload
+    if options.cyg_profile:
+        cmd_env = os.environ.copy()
+        cmd_env["LD_PRELOAD"] = "liblttng-ust-cyg-profile.so"
+        
     # surround cmd with sleep to get a better execution window
     if (cmd is not None):
         time.sleep(0.1)
